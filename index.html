@@ -1,1 +1,202 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b0d10"><link rel="manifest" href="manifest.json"><title>NEXUS</title><link rel="stylesheet" href="styles.css"></head><body><header><small>NEXUS / ADAPTIVE LEARNING OS</small><h1 id="title">Today</h1></header><main id="app"></main><nav><button data-r="today">⌂<small>Today</small></button><button data-r="learn">◈<small>Learn</small></button><button data-r="test">✓<small>Test</small></button><button data-r="tutor">✦<small>Tutor</small></button><button data-r="profile">◎<small>Profile</small></button></nav><div id="toast"></div><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0d12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NEXUS">
+<title>NEXUS — Adaptive Learning</title>
+<link rel="manifest" href="./manifest.json">
+<style>
+:root{--bg:#080a0f;--panel:#11141b;--panel2:#171b24;--line:#292e39;--text:#f4f6fa;--muted:#9ba3b2;--accent:#7c5cff;--accent2:#23d3a3;--danger:#ff5d73;--warn:#ffc857;--r:20px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% -10%,#242044 0,#080a0f 38%),var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter",sans-serif;min-height:100vh}
+button,input{font:inherit}button{border:0;cursor:pointer}.app{max-width:900px;margin:auto;padding:18px 16px 96px}.top{display:flex;justify-content:space-between;align-items:center;margin:8px 0 22px}.brand{font-weight:900;letter-spacing:.18em;font-size:15px}.status{font-size:12px;color:var(--muted);display:flex;gap:7px;align-items:center}.dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);box-shadow:0 0 12px #23d3a3}
+.view{display:none}.view.active{display:block}.hero{padding:24px;border:1px solid var(--line);background:linear-gradient(145deg,#171525,#10131a);border-radius:28px;margin-bottom:14px}.eyebrow{text-transform:uppercase;color:#a89cff;font-size:11px;font-weight:800;letter-spacing:.14em}.hero h1{font-size:clamp(30px,7vw,56px);line-height:.98;margin:10px 0 12px;letter-spacing:-.05em}.hero p{color:var(--muted);line-height:1.55;margin:0;max-width:680px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px}.card h3{margin:0 0 8px;font-size:16px}.muted{color:var(--muted)}.tiny{font-size:12px}.big{font-size:30px;font-weight:850}.progress{height:9px;background:#252a34;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#b16cff);border-radius:99px;width:0;transition:width .35s}.btn{background:var(--accent);color:white;padding:13px 17px;border-radius:13px;font-weight:800}.btn.secondary{background:#242934;color:#fff}.btn.green{background:var(--accent2);color:#07120f}.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}.btn:disabled{opacity:.45;cursor:not-allowed}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.between{display:flex;justify-content:space-between;gap:12px;align-items:center}.pill{display:inline-flex;padding:6px 9px;border-radius:99px;background:#222733;color:#cbd0db;font-size:11px;font-weight:800}.lesson{border:1px solid var(--line);background:var(--panel);border-radius:18px;padding:16px;margin:10px 0;cursor:pointer;transition:.18s}.lesson:hover,.lesson.selected{border-color:#6654d9;background:#17182a;transform:translateY(-1px)}.lesson h3{margin:5px 0}.lesson p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}.tag{font-size:10px;color:#a89cff;text-transform:uppercase;letter-spacing:.12em;font-weight:900}.nav{position:fixed;bottom:0;left:0;right:0;background:rgba(9,11,16,.92);backdrop-filter:blur(18px);border-top:1px solid var(--line);z-index:5}.navin{max-width:900px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 8px calc(8px + env(safe-area-inset-bottom))}.nav button{background:none;color:#727a89;padding:7px 2px;font-size:10px;font-weight:800}.nav button.active{color:#fff}.navicon{display:block;font-size:19px;margin-bottom:3px}.timer{font-size:72px;font-weight:900;letter-spacing:-.06em;text-align:center;margin:22px 0}.choice{display:block;width:100%;text-align:left;background:#191d26;color:#e9ecf2;border:1px solid #303642;padding:14px;border-radius:14px;margin:8px 0}.choice.correct{border-color:var(--accent2);background:#11251f}.choice.wrong{border-color:var(--danger);background:#28151b}.input{width:100%;background:#0d1016;color:white;border:1px solid var(--line);border-radius:13px;padding:13px;outline:none}.input:focus{border-color:var(--accent)}textarea.input{min-height:120px;resize:vertical}.toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-20px);opacity:0;pointer-events:none;background:#fff;color:#090b10;border-radius:12px;padding:11px 15px;font-weight:800;font-size:13px;z-index:20;transition:.25s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.kpi .card{padding:14px}.score{font-size:48px;font-weight:900}.bar{height:7px;background:#272c36;border-radius:10px;overflow:hidden;margin:7px 0 14px}.bar i{display:block;height:100%;background:var(--accent2)}.hidden{display:none!important}.divider{height:1px;background:var(--line);margin:16px 0}.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(8px);z-index:10;display:none;align-items:flex-end;justify-content:center}.modal.open{display:flex}.sheet{width:min(900px,100%);background:#11141b;border:1px solid var(--line);border-radius:26px 26px 0 0;padding:22px;max-height:88vh;overflow:auto}.badge{font-size:10px;padding:5px 7px;border-radius:7px;background:#252a34}.danger{color:var(--danger)}@media(min-width:700px){.app{padding-top:30px}.hero{padding:34px}.modal{align-items:center}.sheet{border-radius:26px;max-width:650px}.grid.three{grid-template-columns:repeat(3,1fr)}}@media(max-width:520px){.grid{grid-template-columns:1fr}.timer{font-size:62px}.kpi{grid-template-columns:1fr 1fr 1fr}.hero h1{font-size:38px}}
+</style>
+</head>
+<body>
+<div id="toast" class="toast"></div>
+<div class="app">
+<header class="top"><div class="brand">NEXUS</div><div class="status"><span class="dot"></span><span id="saveStatus">saved locally</span></div></header>
+
+<section id="today" class="view active">
+<div class="hero">
+<div class="eyebrow">Adaptive learning system</div>
+<h1 id="greeting">Build the machine that learns.</h1>
+<p id="todaySummary">NEXUS chooses what you should learn next from your performance, not from a fixed timetable.</p>
+<div class="row" style="margin-top:18px"><button class="btn" onclick="startRecommended()">Start today's session</button><button class="btn secondary" onclick="openDiagnostic()">Run diagnostic</button></div>
+</div>
+<div class="kpi">
+<div class="card"><div class="muted tiny">TODAY</div><div class="big" id="todayMin">0m</div><div class="muted tiny">of <span id="targetMin">20</span>m</div></div>
+<div class="card"><div class="muted tiny">STREAK</div><div class="big" id="streak">0</div><div class="muted tiny">days</div></div>
+<div class="card"><div class="muted tiny">XP</div><div class="big" id="xp">0</div><div class="muted tiny">earned</div></div>
+</div>
+<div class="card" style="margin-top:12px">
+<div class="between"><div><div class="tag">NEXT BEST ACTION</div><h3 id="recTitle">Functions as machines</h3><div class="muted tiny" id="recReason">Start with a short diagnostic.</div></div><span class="pill" id="recLevel">FOUNDATION</span></div>
+<div class="progress" style="margin:15px 0 8px"><i id="masteryBar"></i></div><div class="between tiny muted"><span id="masteryText">0% mastery</span><span id="confidenceText">low confidence</span></div>
+</div>
+<div class="grid" style="margin-top:12px">
+<div class="card"><h3>Why this?</h3><p class="muted tiny" id="why">Your first session establishes a baseline. NEXUS will adapt after every test.</p></div>
+<div class="card"><h3>Rule</h3><p class="muted tiny">No catch-up debt. Miss a day → restart with the smallest useful action.</p></div>
+</div>
+</section>
+
+<section id="learn" class="view">
+<div class="between"><div><div class="eyebrow">Curriculum</div><h2 style="margin:6px 0">Learn by mechanism.</h2></div><button class="btn secondary" onclick="openDiagnostic()">Diagnose</button></div>
+<p class="muted">Eight connected foundations. Your performance changes what appears next.</p>
+<div id="lessonList"></div>
+</section>
+
+<section id="session" class="view">
+<div class="between"><div><div class="eyebrow">Deep work</div><h2 id="sessionTitle" style="margin:6px 0">Session</h2></div><span class="pill" id="sessionType">10 MIN</span></div>
+<div class="card" style="margin-top:12px;text-align:center">
+<div class="muted tiny">FOCUS TIMER</div><div class="timer" id="timer">10:00</div>
+<div class="row" style="justify-content:center"><button class="btn" id="timerBtn" onclick="toggleTimer()">Start</button><button class="btn secondary" onclick="finishSession()">Finish</button></div>
+</div>
+<div class="card" style="margin-top:12px">
+<div class="tag">MENTAL MODEL</div><h3 id="mentalTitle">What are you trying to explain?</h3><p id="mentalBody" class="muted"></p>
+<div class="divider"></div><div class="tag">ACTIVE RECALL</div><p id="recallPrompt"></p><textarea id="recallAnswer" class="input" placeholder="Explain it without looking at the answer..."></textarea>
+<div class="row" style="margin-top:10px"><button class="btn green" onclick="checkRecall()">Check explanation</button><button class="btn ghost" onclick="showHint()">Hint</button></div>
+<div id="recallFeedback" class="muted tiny" style="margin-top:12px"></div>
+</div>
+</section>
+
+<section id="test" class="view">
+<div class="between"><div><div class="eyebrow">Measure understanding</div><h2 style="margin:6px 0">Test, don't reread.</h2></div><span class="pill" id="testMeta">5 QUESTIONS</span></div>
+<div id="quiz"></div>
+<div class="row" style="margin-top:14px"><button class="btn" onclick="submitQuiz()">Submit test</button><button class="btn secondary" onclick="newQuiz()">Reset</button></div>
+<div id="testResult" class="card hidden" style="margin-top:14px"></div>
+</section>
+
+<section id="profile" class="view">
+<div class="hero"><div class="eyebrow">Learner model</div><h1>Your learning profile.</h1><p>NEXUS stores your progress on this device. Nothing is uploaded by this version.</p></div>
+<div class="grid">
+<div class="card"><h3>Daily target</h3><input id="targetInput" class="input" type="number" min="5" max="120" step="5"><div class="row" style="margin-top:10px"><button class="btn" onclick="saveTarget()">Save target</button></div></div>
+<div class="card"><h3>Learning mode</h3><p class="muted tiny">Adaptive mode is always on. It increases difficulty only when you demonstrate understanding.</p><span class="pill">AUTO-ADAPT</span></div>
+</div>
+<div class="card" style="margin-top:12px"><h3>Evidence</h3><div id="evidence" class="muted tiny"></div></div>
+<div class="card" style="margin-top:12px"><h3>Data</h3><div class="row"><button class="btn secondary" onclick="exportData()">Export JSON</button><button class="btn ghost" onclick="resetData()">Reset everything</button></div></div>
+</section>
+</div>
+
+<nav class="nav"><div class="navin">
+<button data-view="today" class="active" onclick="go('today')"><span class="navicon">◉</span>Today</button>
+<button data-view="learn" onclick="go('learn')"><span class="navicon">◇</span>Learn</button>
+<button data-view="session" onclick="go('session')"><span class="navicon">▶</span>Session</button>
+<button data-view="test" onclick="go('test')"><span class="navicon">✓</span>Test</button>
+<button data-view="profile" onclick="go('profile')"><span class="navicon">○</span>Profile</button>
+</div></nav>
+
+<div id="diagnostic" class="modal"><div class="sheet"><div class="between"><div><div class="eyebrow">Baseline</div><h2>What can you already do?</h2></div><button class="btn ghost" onclick="closeDiagnostic()">Close</button></div><p class="muted">Answer 5 questions. NEXUS will use the result to choose your starting level.</p><div id="diagQuiz"></div><button class="btn" style="width:100%;margin-top:12px" onclick="submitDiagnostic()">Calculate starting point</button><div id="diagResult" style="margin-top:12px"></div></div></div>
+
+<script>
+const KEY="nexus_real_v1";
+const lessons=[
+{id:"math",domain:"MATHEMATICS",title:"Functions as machines",desc:"Inputs, outputs, composition and why equations are models.",level:1,mental:"A function is a rule that maps each allowed input to exactly one output.",prompt:"If f(x)=2x+3, what does f(4) mean?",hint:"Put 4 into the machine.",answer:"11",next:"newton"},
+{id:"newton",domain:"PHYSICS",title:"Newton's laws from first principles",desc:"Force, mass, acceleration and the constraints hidden in F=ma.",level:1,mental:"Acceleration is a change in velocity caused by net force; mass measures resistance to acceleration.",prompt:"If the net force on a 2 kg object is 10 N, what acceleration results?",hint:"Use a = F/m.",answer:"5",next:"energy"},
+{id:"energy",domain:"PHYSICS",title:"Energy, work and constraints",desc:"Track what changes, what is conserved and where energy goes.",level:1,mental:"Energy accounting works because changes in one part of a system must be balanced by transfers or transformations elsewhere.",prompt:"A 2 kg object is lifted 5 m. Ignoring air resistance, which variable controls gravitational potential energy?",hint:"Think mass, gravity and height.",answer:"height",next:"cells"},
+{id:"cells",domain:"BIOLOGY",title:"Cells: smallest living systems",desc:"Compartments, gradients, membranes and self-maintenance.",level:1,mental:"Life depends on controlled flows of matter and energy across boundaries.",prompt:"Why does a cell membrane need selective transport?",hint:"Uncontrolled mixing destroys useful gradients.",answer:"control",next:"memory"},
+{id:"memory",domain:"PSYCHOLOGY",title:"Learning, memory and reinforcement",desc:"Prediction, feedback, retrieval and why practice beats rereading.",level:1,mental:"Learning changes future behavior by updating internal predictions from feedback.",prompt:"Why is retrieval practice usually stronger than rereading?",hint:"One requires reconstruction from memory.",answer:"retrieval",next:"incentives"},
+{id:"incentives",domain:"ECONOMICS",title:"Incentives and unintended effects",desc:"Constraints, incentives, trade-offs and second-order consequences.",level:1,mental:"People respond to incentives, so changing a rule changes behavior—not just the stated outcome.",prompt:"Why can a reward sometimes reduce intrinsic motivation?",hint:"Ask what behavior the reward makes salient.",answer:"crowding",next:"epistemology"},
+{id:"epistemology",domain:"PHILOSOPHY",title:"How do we know?",desc:"Claims, evidence, assumptions, falsification and uncertainty.",level:1,mental:"A belief becomes knowledge-worthy when the evidence and reasoning survive attempts to disconfirm it.",prompt:"What is the purpose of trying to falsify your own hypothesis?",hint:"A theory that cannot fail cannot be tested.",answer:"test",next:"stats"},
+{id:"stats",domain:"STATISTICS",title:"Probability and uncertainty",desc:"Randomness, distributions, base rates and Bayesian updating.",level:1,mental:"Probability quantifies uncertainty so evidence can update beliefs without pretending to have certainty.",prompt:"If an event has probability 0.2, what does that mean over many comparable trials?",hint:"Think long-run frequency.",answer:"20%",next:"math"}
+];
+const qbank={
+math:[
+["If f(x)=3x-2, what is f(4)?",["8","10","12","14"],1,"Substitute x=4: 12-2=10."],
+["Which statement best describes a function?",["Any equation","One output for each allowed input","Any graph","A straight line"],1,"The defining property is unique output per input."]
+],
+newton:[
+["A 2 kg object experiences 10 N net force. Acceleration?",["2 m/s²","5 m/s²","10 m/s²","20 m/s²"],1,"a=F/m=10/2=5."],
+["If net force doubles while mass stays constant, acceleration:",["halves","stays same","doubles","becomes zero"],2,"F=ma, so acceleration scales with net force."],
+["Which force changes velocity?",["net force","mass","temperature","time"],0,"A nonzero net force causes acceleration."]
+],
+energy:[
+["If you lift the same mass twice as high, gravitational potential energy:",["halves","stays same","doubles","becomes zero"],2,"U=mgh, so doubling h doubles U."],
+["Work by a constant force parallel to motion is:",["F/d","Fd","F+d","F-d"],1,"W=Fd when force and displacement are parallel."]
+],
+cells:[
+["The cell membrane mainly provides:",["uncontrolled mixing","selective boundary control","DNA replication","muscle force"],1,"It regulates transport between cell and environment."],
+["A concentration gradient stores usable:",["information only","potential for transport","massless energy","nothing"],1,"Gradients can drive transport and other cellular processes."]
+],
+memory:[
+["Which is active retrieval?",["Rereading notes","Highlighting","Answering from memory","Watching a video"],2,"Retrieval requires reconstructing the answer."],
+["Feedback is useful because it:",["adds difficulty only","updates your model of what you know","replaces practice","guarantees mastery"],1,"Feedback reduces uncertainty about errors."]
+],
+incentives:[
+["A policy reward can create an unintended effect because people:",["ignore incentives","respond strategically","stop behaving","lose all preferences"],1,"Rules change payoffs, so behavior adapts."],
+["A trade-off means:",["everything improves","one choice has no cost","gaining one thing can require giving up another","prices never change"],2,"Resources and constraints create opportunity costs."]
+],
+epistemology:[
+["A claim is easier to test when it is:",["unfalsifiable","precise and falsifiable","vague","based only on confidence"],1,"A testable claim makes risky predictions."],
+["Best response to strong contrary evidence:",["ignore it","change the evidence","update the belief proportionally","become certain"],2,"Good reasoning updates instead of protecting identity."]
+],
+stats:[
+["A probability of 0.2 corresponds to:",["2%","20%","50%","80%"],1,"0.2 × 100 = 20%."],
+["Base rates matter because:",["prior frequencies affect interpretation","they remove uncertainty","they prove causation","they replace evidence"],0,"Prior prevalence changes posterior probability."]
+]};
+const diag=[
+["2+3×4 = ?",["20","14","10","24"],1],
+["If a car goes 60 km/h for 2 h, distance?",["30 km","60 km","120 km","180 km"],2],
+["Which is evidence for a claim?",["Confidence","Anecdote only","Repeatable observation","Popularity"],2],
+["What happens when demand rises while supply is fixed?",["Pressure on price tends to rise","Nothing","Supply disappears","Demand becomes zero"],0],
+["A 10% chance means approximately:",["10 times certain","10 out of 100 comparable cases in the long run","never","always"],1]
+];
+let S=load();let timerId=null;let seconds=600;let currentQuiz=[];let diagAnswers=[];let recallGood=false;
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||fresh()}catch(e){return fresh()}}
+function fresh(){return{target:20,xp:0,streak:0,lastDay:"",events:[],mastery:{},level:{},selected:"math",onboarded:false}}
+function save(){localStorage.setItem(KEY,JSON.stringify(S));document.getElementById("saveStatus").textContent="saved just now";setTimeout(()=>document.getElementById("saveStatus").textContent="saved locally",900)}
+function todayKey(){return new Date().toISOString().slice(0,10)}
+function toast(x){let t=document.getElementById("toast");t.textContent=x;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
+function go(v){document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));document.getElementById(v).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));if(v==="learn")renderLessons();if(v==="test")newQuiz();if(v==="profile")renderProfile();if(v==="today")renderToday();window.scrollTo(0,0)}
+function lesson(id){return lessons.find(x=>x.id===id)||lessons[0]}
+function mastery(id){return Math.min(100,Math.round(S.mastery[id]||0))}
+function bestNext(){
+  let ranked=lessons.map((l,i)=>({l,score:mastery(l.id),i})).sort((a,b)=>a.score-b.score);
+  if(!S.onboarded)return lesson("math");
+  let low=ranked.find(x=>x.score<70);return low?low.l:lesson(S.selected);
+}
+function renderToday(){
+ let l=bestNext(), mins=S.events.filter(e=>e.type==="study"&&e.day===todayKey()).reduce((a,e)=>a+e.minutes,0);
+ document.getElementById("todayMin").textContent=mins+"m";document.getElementById("targetMin").textContent=S.target;
+ document.getElementById("xp").textContent=S.xp;document.getElementById("streak").textContent=S.streak;
+ document.getElementById("recTitle").textContent=l.title;document.getElementById("recReason").textContent=reason(l);
+ document.getElementById("recLevel").textContent=mastery(l.id)<40?"FOUNDATION":mastery(l.id)<70?"BUILD":"TRANSFER";
+ document.getElementById("masteryBar").style.width=mastery(l.id)+"%";document.getElementById("masteryText").textContent=mastery(l.id)+"% mastery";
+ document.getElementById("confidenceText").textContent=confidence(l.id)+" confidence";document.getElementById("why").textContent=reason(l);
+ document.getElementById("todaySummary").textContent=S.onboarded?"Your next action is selected from your weakest demonstrated concept.": "Run the 5-question diagnostic or start the foundation lesson.";
+ document.getElementById("greeting").textContent=new Date().getHours()<12?"Build the machine that learns.":new Date().getHours()<18?"Do the next useful thing.":"One focused session beats another plan.";
+}
+function confidence(id){let n=S.events.filter(e=>e.lesson===id&&e.type==="test").length;return n>=3?"high":n>=1?"medium":"low"}
+function reason(l){if(!S.onboarded)return"Baseline first: establish what you already know.";let m=mastery(l.id);if(m<30)return"Your evidence is weak here, so NEXUS is repairing the foundation.";if(m<70)return"You understand pieces of this. One more retrieval cycle should strengthen it.";return"This is your lowest demonstrated mastery. Time for transfer.";
+}
+function renderLessons(){let el=document.getElementById("lessonList");el.innerHTML=lessons.map(l=>`<div class="lesson ${S.selected===l.id?"selected":""}" onclick="selectLesson('${l.id}')"><div class="between"><span class="tag">${l.domain}</span><span class="badge">${mastery(l.id)}%</span></div><h3>${l.title}</h3><p>${l.desc}</p><div class="progress" style="margin-top:12px"><i style="width:${mastery(l.id)}%"></i></div></div>`).join("")}
+function selectLesson(id){S.selected=id;save();openSession(id)}
+function startRecommended(){openSession(bestNext().id)}
+function openSession(id){S.selected=id;let l=lesson(id);document.getElementById("sessionTitle").textContent=l.title;document.getElementById("sessionType").textContent=mastery(id)<40?"FOUNDATION":"RETRIEVAL";document.getElementById("mentalTitle").textContent=l.mental;document.getElementById("mentalBody").textContent=l.desc;document.getElementById("recallPrompt").textContent=l.prompt;document.getElementById("recallAnswer").value="";document.getElementById("recallFeedback").textContent="";recallGood=false;resetTimer();go("session")}
+function resetTimer(){clearInterval(timerId);timerId=null;seconds=600;document.getElementById("timer").textContent="10:00";document.getElementById("timerBtn").textContent="Start"}
+function toggleTimer(){if(timerId){clearInterval(timerId);timerId=null;document.getElementById("timerBtn").textContent="Resume";return}document.getElementById("timerBtn").textContent="Pause";timerId=setInterval(()=>{seconds--;document.getElementById("timer").textContent=fmt(seconds);if(seconds<=0){clearInterval(timerId);timerId=null;finishSession()}},1000)}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function finishSession(){clearInterval(timerId);timerId=null;let used=Math.max(1,Math.round((600-seconds)/60));if(seconds<=599){log("study",used,S.selected);S.xp+=used*2;updateStreak();save();toast("Session recorded +"+(used*2)+" XP")}go("today")}
+function checkRecall(){let a=document.getElementById("recallAnswer").value.trim().toLowerCase(),l=lesson(S.selected);if(a.length<3){toast("Write an explanation first");return}let keys=l.answer.toLowerCase().split("|");let ok=keys.some(k=>a.includes(k)||k.includes(a));recallGood=ok;let fb=document.getElementById("recallFeedback");if(ok){S.mastery[l.id]=Math.min(100,mastery(l.id)+10);S.xp+=10;fb.innerHTML="<b>Good.</b> You retrieved the core mechanism. NEXUS raised mastery by 10%.";toast("+10 mastery")}else{fb.innerHTML="<b>Not yet.</b> "+l.hint+" Try again without looking.";toast("Repair the model")}save()}
+function showHint(){toast(lesson(S.selected).hint)}
+function newQuiz(){let id=S.selected||bestNext().id;let pool=qbank[id]||qbank.newton;currentQuiz=[...pool].sort(()=>Math.random()-.5).slice(0,Math.min(5,pool.length));document.getElementById("testMeta").textContent=currentQuiz.length+" QUESTIONS";document.getElementById("testResult").classList.add("hidden");document.getElementById("quiz").innerHTML=currentQuiz.map((q,i)=>`<div class="card" style="margin:10px 0"><div class="tag">Q${i+1}</div><h3>${q[0]}</h3>${q[1].map((c,j)=>`<button class="choice" data-q="${i}" data-a="${j}" onclick="pick(this)">${c}</button>`).join("")}</div>`).join("")}
+function pick(b){document.querySelectorAll('[data-q="'+b.dataset.q+'"]').forEach(x=>x.classList.remove("selected"));b.classList.add("selected");b.style.outline="2px solid #7c5cff"}
+function submitQuiz(){if(!currentQuiz.length)return;let score=0;currentQuiz.forEach((q,i)=>{let b=document.querySelector('[data-q="'+i+'"].selected');if(b){let ok=+b.dataset.a===q[2];if(ok)score++;b.classList.add(ok?"correct":"wrong")} });let pct=Math.round(score/currentQuiz.length*100),id=S.selected||bestNext().id;let old=mastery(id);let delta=pct>=80?15:pct>=60?8:-10;S.mastery[id]=Math.max(0,Math.min(100,old+delta));S.xp+=score*5;log("test",0,id,{score,pct});if(pct>=70)S.selected=lesson(id).next;save();updateStreak();let r=document.getElementById("testResult");r.classList.remove("hidden");r.innerHTML=`<div class="tag">RESULT</div><div class="score">${pct}%</div><p class="muted">${score}/${currentQuiz.length} correct. Mastery: ${old}% → ${mastery(id)}%.</p><p><b>${pct>=80?"Advance.":"Repair before advancing."}</b> NEXUS recommends <b>${bestNext().title}</b> next.</p><button class="btn" onclick="startRecommended()">Do recommended next</button>`;toast(pct>=70?"Concept strengthened":"Concept needs repair")}
+function log(type,minutes,lessonId,extra={}){S.events.push({type,minutes,lesson:lessonId,day:todayKey(),at:Date.now(),...extra});if(S.events.length>300)S.events=S.events.slice(-300)}
+function updateStreak(){let d=todayKey();if(S.lastDay===d)return;let y=new Date();y.setDate(y.getDate()-1);let prev=y.toISOString().slice(0,10);S.streak=S.lastDay===prev?S.streak+1:1;S.lastDay=d}
+function openDiagnostic(){diagAnswers=[];document.getElementById("diagResult").innerHTML="";document.getElementById("diagQuiz").innerHTML=diag.map((q,i)=>`<div class="card" style="margin:10px 0"><div class="tag">BASELINE ${i+1}</div><h3>${q[0]}</h3>${q[1].map((c,j)=>`<button class="choice" data-d="${i}" data-a="${j}" onclick="pickDiag(this)">${c}</button>`).join("")}</div>`).join("");document.getElementById("diagnostic").classList.add("open")}
+function closeDiagnostic(){document.getElementById("diagnostic").classList.remove("open")}
+function pickDiag(b){document.querySelectorAll('[data-d="'+b.dataset.d+'"]').forEach(x=>x.style.outline="");b.style.outline="2px solid #7c5cff";diagAnswers[+b.dataset.d]=+b.dataset.a}
+function submitDiagnostic(){let score=diag.reduce((n,q,i)=>n+(diagAnswers[i]===q[2]?1:0),0);if(score<5&&diagAnswers.length<5){toast("Answer all 5");return}S.onboarded=true;let start=score<=1?"math":score<=3?"newton":"energy";S.selected=start;S.level.global=score;S.xp+=score*5;save();document.getElementById("diagResult").innerHTML=`<div class="card"><div class="tag">BASELINE COMPLETE</div><h3>${score}/5</h3><p class="muted">${score<2?"Start with fundamentals.":score<4?"You have useful foundations. We'll build upward.":"You can start moving across mechanisms faster."}</p><button class="btn" onclick="closeDiagnostic();startRecommended()">Start ${lesson(start).title}</button></div>`;renderToday()}
+function renderProfile(){document.getElementById("targetInput").value=S.target;let tests=S.events.filter(e=>e.type==="test").length,study=S.events.filter(e=>e.type==="study").length;document.getElementById("evidence").innerHTML=`<p><b>${tests}</b> tests recorded · <b>${study}</b> study sessions · <b>${Object.keys(S.mastery).length}</b> concepts touched.</p><p>Current recommendation: <b>${bestNext().title}</b>.</p><p>Storage: this device only. Clear site data and this profile disappears.</p>`}
+function saveTarget(){let n=Math.max(5,Math.min(120,+document.getElementById("targetInput").value||20));S.target=n;save();renderToday();toast("Daily target saved")}
+function exportData(){let blob=new Blob([JSON.stringify(S,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="nexus-learning-data.json";a.click();URL.revokeObjectURL(a.href)}
+function resetData(){if(!confirm("Reset all NEXUS progress on this device?"))return;S=fresh();save();renderToday();renderLessons();renderProfile();toast("Progress reset")}
+if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
+renderToday();renderLessons();renderProfile();
+</script>
+</body>
+</html>

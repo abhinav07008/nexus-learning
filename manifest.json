@@ -1,1 +1,9 @@
-{"name":"NEXUS Adaptive Learning OS","short_name":"NEXUS","start_url":".","display":"standalone","background_color":"#0b0d10","theme_color":"#0b0d10"}
+{
+  "name":"NEXUS — Adaptive Learning",
+  "short_name":"NEXUS",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#080a0f",
+  "theme_color":"#0b0d12",
+  "description":"A local-first adaptive learning system built around retrieval, testing and first principles."
+}
