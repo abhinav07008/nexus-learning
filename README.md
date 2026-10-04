@@ -1,0 +1,1 @@
+# NEXUS\n\nZero-cost local-first adaptive learning PWA.\n\nDeploy with GitHub Pages: Settings -> Pages -> GitHub Actions. Open the resulting URL in Safari and use Share -> Add to Home Screen.\n\nLearning data is stored locally. No API key is included.
